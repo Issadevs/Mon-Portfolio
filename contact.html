@@ -1,0 +1,171 @@
+<!DOCTYPE html lang="fr">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="style.css" /> <!-- Lie le fichier CSS pour les styles généraux externe -->
+        <link rel="stylesheet" href="Style_Formulaire.css" /> <!-- Lie le fichier CSS_Formulaire externe pour le formulaire -->
+        <link rel="stylesheet" href="style_CV.css" /> <!-- Lie le fichier CSS_CV externe pour le CV -->
+		<title>Contactez-nous</title> <!-- Titre de la page -->
+        <style> /*Style CSS pour la réponse aprés avoir cliqué sur envoyer*/
+            #reponse {
+                margin-top: 20px;
+                font-weight: bold;
+                color: green;
+            }
+        </style>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
+        <script type="text/javascript">
+            (function() {
+                // https://dashboard.emailjs.com/admin/account
+                emailjs.init('-40MbQjSZaRZGPzpY');
+            })();
+        </script>
+
+        <script> // Script JavaScript
+        
+        function envoyerFormulaire(event) {
+          event.preventDefault();
+
+          // Get the values from the form fields
+          var nom = document.getElementById('nom').value;
+          var prenom = document.getElementById('prenom').value;
+          var email = document.getElementsByName('field3')[0].value;
+          var sujet = document.getElementsByName('field4')[0].value;
+          var message = document.getElementById('field5').value;
+
+          // Vérifier si le sujet est "Autre"
+            if (sujet === "Autre") {
+                // Récupérer la valeur du champ "Veuillez préciser"
+                var autreSujet = document.getElementsByName('field4-autre')[0].value;
+            
+                // Utiliser la valeur de "Veuillez préciser" comme sujet du courrier électronique
+                sujet = autreSujet;
+            }
+
+          // Create an object with the template variables
+          var templateParams = {
+            name: 'Issa Kane', // Replace with your name or the recipient's name
+            to_email: 'issakane004@outlook.com', // Replace with the recipient's email address
+            from_name: nom + ' ' + prenom,
+            from_email: email,
+            subject: sujet,
+            message: message
+          };
+      
+          // Send the email using EmailJS
+          emailjs.send("service_xwff14s","template_cdd4c5l", templateParams)
+            .then(function(response) {
+              console.log('SUCCESS!', response.status, response.text);
+              // Display a success message to the user
+              var reponseElement = document.getElementById('reponse');
+              reponseElement.innerHTML = "Votre message a été envoyé, vous recevrez une réponse dans maximum 24h !";
+            
+              // Reset the form values
+              document.monformulaire.reset();
+            }, function(error) {
+              console.log('FAILED...', error);
+            });
+        }
+
+        </script>
+
+        
+         <script>
+            function autreOption(selectElement) {
+                const autreOptionElement = document.getElementById("autreOption");
+                if (selectElement.value === "Autre") {
+                    autreOptionElement.style.display = "block";
+                } else {
+                    autreOptionElement.style.display = "none";
+                }
+            }
+        </script>
+        
+	</head>
+	<body>
+		<nav>
+			<div class="profile">
+				<img src="Issa.png" alt="profile photo" /> <!-- Image de profil d'Issa -->
+				<h1>Issa KANE</h1> <!-- Nom d'Issa -->
+			</div>
+			<ul>
+				<li><a href="index.html">A propos de moi</a></li> <!-- Lien vers la page "A propos de nous" -->
+				<li><a href="CV_Issa.html">Curriculum Vitæ</a></li> <!-- Lien vers le CV d'Issa -->
+				<li><a href="contact.html">Contactez-moi</a></li> <!-- Lien vers la page "Contactez-nous" -->
+			</ul>
+			
+		</nav>
+
+        <header>
+            <h1>Me contacter !</h1> <!-- Titre de la section d'en-tête -->
+        </header>
+
+        <section>
+            <div class="photo">
+                <img src="profile-pic.png" alt="Ma photo de profil">
+            </div>
+            <form name="monformulaire" onsubmit="envoyerFormulaire(event)">
+                <ul class="form-style-1">
+                    <li>
+                        <label>Votre Nom <span class="required">*</span></label>
+                        <input type="text" id="nom" name="field1" class="field-divided" placeholder="Nom" required />
+                        <input type="text" id="prenom" name="field2" class="field-divided" placeholder="Prénom" required />
+                    </li>
+                    <li>
+                        <label>Email <span class="required">*</span></label>
+                        <input type="email" name="field3" class="field-long" required />
+                    </li>
+                    <li>
+                        <label>Sujet</label>
+                        <select name="field4" class="field-select" onchange="autreOption(this)">
+                            <option value="Offre d'alternance">Offre d'alternance</option>
+                            <option value="Mes projets">Mes projets</option>
+                            <option value="Prposition">Proposition</option>
+                            <option value="Autre">Autre</option> <!-- Option "Autre" ajoutée -->
+                        </select>
+                    </li>
+                    <li id="autreOption" style="display: none;">
+                        <label>Veuillez préciser</label>
+                        <input type="text" name="field4-autre" class="field-long" />
+                    </li>
+                    <li>
+                        <label>Votre message <span class="required">*</span></label>
+                        <textarea name="field5" id="field5" class="field-long field-textarea" required></textarea>
+                    </li>
+                    <li>
+                        <input type="submit" value="Envoyer" />
+                    </li>
+                </ul>
+            </form>
+        </section>
+        
+
+        <section id="reponse"></section> <!-- Section pour afficher la réponse du formulaire -->
+
+        <footer>
+			<div class="colonne">
+				<h3>Informations de contact</h3>
+				<p>Email : Issa.kane@efrei.net</p>
+				<p>Téléphone : +33 06 52 52 72 14</p>
+				<p>Adresse : Sucy-en-brie, Val de marne</p>
+			</div>
+			<div class="colonne">
+				<h3>Autres pages</h3>
+				<p><a href="index.html">A propos de moi</a></p>
+				<p><a href="CV_Issa.html">Mon CV</a></p>
+			</div>
+			<div class="colonne">
+				<h3>Mes réseaux</h3>
+				<p><a href="https://www.linkedin.com/in/issa-kane"></a>
+					<img src="LinkedIn.png" alt="LinkedIn" />
+				</a></p>
+				<p><a href="https://www.github.com/issadevs">
+					<img src="GitHub.png" alt="GitHub" />
+				</a></p>
+			</div>
+		</footer>
+        <p class="footer-copyright">© 2023 Issa Kane. Tous droits réservés.</p>
+	</body>
+</html>
