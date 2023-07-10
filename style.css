@@ -196,13 +196,37 @@ footer .colonne img {
 
 
 /* Responsive */
-@media screen and (max-width: 700px) {
-  nav {
-    justify-content: center;
+
+
+@media (max-width: 767px) {
+  .responsive-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  nav ul {
-    display: none;
+  .responsive-nav ul li {
+    margin: 10px 0;
+    border-bottom: none;
+  }
+
+  .responsive-nav ul li:first-child {
+    margin-top: 20px;
+  }
+
+  .responsive-nav ul li:last-child {
+    margin-bottom: 20px;
+  }
+
+  .responsive-nav ul li a {
+    color: black;
+  }
+
+  .responsive-nav.active ul {
+    display: flex;
+  }
+
+  nav {
+    justify-content: center;
   }
 
   .page-content header {
